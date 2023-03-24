@@ -1,6 +1,8 @@
 from playwright.sync_api import sync_playwright,Playwright,expect
 import time
-import usernameandpass
+##!!!replace with your email and password
+email="Your CHATGPT Email"
+password="Your CHATGPT password"
 
 def login(email,password):
     page.fill('input#username',email)
