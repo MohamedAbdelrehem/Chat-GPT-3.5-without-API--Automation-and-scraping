@@ -1,9 +1,14 @@
 from playwright.sync_api import sync_playwright, Playwright, expect
 import time
 import pyttsx3
-# !!!replace with your email and password
-email = "faebfbba3d1f@drmail.in"
-password = "faebfbba3d1f@drmail.in"
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+# !!!replace with your cahtgpt email and password to test it!!!
+email = os.environ.get('email')
+password = os.environ.get('password')
+
 hideBrowser = True
 
 
