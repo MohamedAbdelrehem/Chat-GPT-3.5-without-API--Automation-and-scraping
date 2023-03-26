@@ -1,8 +1,10 @@
 from playwright.sync_api import sync_playwright, Playwright, expect
 import time
+import pyttsx3
 # !!!replace with your email and password
-email = "Your CHATGPT Email"
-password = "Your CHATGPT password"
+email = "faebfbba3d1f@drmail.in"
+password = "faebfbba3d1f@drmail.in"
+hideBrowser = True
 
 
 def login(email, password):
@@ -58,7 +60,16 @@ def returnTheAns(ansNumber):
         f"div:nth-child({ansNumber}) > .text-base").all_inner_texts()
     clean_output = answer[0].replace('\n', '\n').replace(
         '\t', '\t').replace('  ', ' ')
-    print(f"\n{clean_output}\n\n\n")
+    return(f"\n{clean_output}\n\n\n")
+
+
+def speaktheans(TTS):
+    engine = pyttsx3.init()
+    voices = engine.getProperty('voices')
+    # changing index changes voices but ony 0 and 1 are working here
+    engine.setProperty('voice', voices[3].id)
+    engine.say(TTS)
+    engine.runAndWait()
 
 
 def WaitingLoading(message):
@@ -94,7 +105,7 @@ animation = [
 ansNumber = 0
 
 with sync_playwright() as p:
-    browser = p.firefox.launch(headless=True, slow_mo=50)
+    browser = p.firefox.launch(headless=hideBrowser, slow_mo=50)
     page = browser.new_page()
     page.goto("https://chat.openai.com/chat")
     page.click('button[class="btn relative btn-primary"]')
@@ -107,4 +118,6 @@ with sync_playwright() as p:
         askQuestion()
         waitingForAns()
         ansNumber += 2
-        returnTheAns(ansNumber)
+        answer = returnTheAns(ansNumber)
+        print(answer)
+        speaktheans(answer)
