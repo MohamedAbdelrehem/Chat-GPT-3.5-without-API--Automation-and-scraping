@@ -1,6 +1,5 @@
 from playwright.sync_api import sync_playwright, Playwright, expect
 import time
-import pyttsx3
 from dotenv import load_dotenv
 import os
 
@@ -15,11 +14,11 @@ hideBrowser = True
 def login(email, password):
     page.fill('input#username', email)
     page.click(
-        'button[class="c994ae14c c2fd8f218 ca2dc35c7 c0c7f649b _button-login-id"]')
+        'button[class="ce7494284 c24f2ad5c c5bf19ed3 c66fbaaf0 _button-login-id"]')
     print("entering the email....")
     page.fill('input#password', password)
     page.click(
-        'button[class="c994ae14c c2fd8f218 ca2dc35c7 c0c7f649b _button-login-password"]')
+        'button[class="ce7494284 c24f2ad5c c5bf19ed3 c66fbaaf0 _button-login-password"]')
     print("entering the password....")
     page.click('button[class="btn relative btn-neutral ml-auto"]')
     print("Well done you are loged in")
@@ -68,13 +67,15 @@ def returnTheAns(ansNumber):
     return(f"\n{clean_output}\n\n\n")
 
 
-def speaktheans(TTS):
-    engine = pyttsx3.init()
-    voices = engine.getProperty('voices')
-    # changing index changes voices but ony 0 and 1 are working here
-    engine.setProperty('voice', voices[3].id)
-    engine.say(TTS)
-    engine.runAndWait()
+# def speaktheans(TTS):
+#     from elevenlabs import set_api_key, generate, play
+#     set_api_key("d8f5d4a5d1a6c4c3d407ed7e3fa7e726")
+#     engine = pyttsx3.init()
+#     voices = engine.getProperty('voices')
+#     # changing index changes voices but ony 0 and 1 are working here
+#     engine.setProperty('voice', voices[3].id)
+#     engine.say(TTS)
+#     engine.runAndWait()
 
 
 def WaitingLoading(message):
@@ -110,10 +111,10 @@ animation = [
 ansNumber = 0
 
 with sync_playwright() as p:
-    browser = p.firefox.launch(headless=hideBrowser, slow_mo=50)
+    browser = p.firefox.launch(headless=False, slow_mo=50)
     page = browser.new_page()
     page.goto("https://chat.openai.com/chat")
-    page.click('button[class="btn relative btn-primary"]')
+    page.click('button[data-testid="login-button"]')
     print("Welcome to chat gpt by 5ofo")
     # login function
     login(email=email, password=password)
@@ -125,4 +126,4 @@ with sync_playwright() as p:
         ansNumber += 2
         answer = returnTheAns(ansNumber)
         print(answer)
-        speaktheans(answer)
+        # speaktheans(answer)
